@@ -1,5 +1,6 @@
 # Use the SessionDetails.csv file to create a friendly formatted version to pass out to students.
 
+
 inputfilename = 'SessionDetails.csv'
 outputfilename = 'dCloud_Parsed_Session_Details.txt'
 
