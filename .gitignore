@@ -95,3 +95,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
+.idea/preferred-vcs.xml
+.idea/workspace.xml
+ToPrint/
+SessionDetails.csv
+
