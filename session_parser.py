@@ -1,8 +1,20 @@
 # Use the SessionDetails.csv file to create a friendly formatted version to pass out to students.
+import os.path
+
+# Change AnyConnect URL to match your data center's AVC URL.
+anyconnect_url = 'dcloud-sjc-anyconnect.cisco.com'
+
+# Change intro to match your event's name.  (Anything between the triple quotes will be printed exactly as shown.)
+intro = """Welcome to the SDA Test Drive event!
+
+Following is your login credentials for your dCloud session.
+"""
 
 inputfilename = 'SessionDetails.csv'
 outputdirectory = 'ToPrint'
-with open(inputfilename, 'r') as f:
+
+fn = os.path.join(os.path.dirname(__file__), inputfilename)
+with open(fn, 'r') as f:
     for fline in f:
         fsplit = fline.split(',')  # There are 9 columns in the SessionDetails.csv
         sessionline = {
@@ -18,28 +30,19 @@ with open(inputfilename, 'r') as f:
         }
         # We are only interested in sessions that are started.
         if sessionline['usernames'] != 'Not Started' and sessionline['usernames'] != ' Usernames':
-            sessionline['usernames'] = sessionline['usernames'].split(';')[0]
-            tmp = sessionline['usernames'].split('user1')[0]
+            vpn_user1 = sessionline['usernames'].split(';')[0]
+            tmp = vpn_user1.split('user1')[0]
             tmp = tmp.split('v')[1]
             url = 'http://oob.vpod' + tmp + '.dc-01.com'
             sessionline['url'] = url
-            intro = """Welcome to the CiscoLive 2017 edition of the FTD Basics lab!
-You have 4 hours right now to work on the lab but there is 8 hours of content for you to explore.  So, use this lab time
-to learn about FTD device registration to the FMC and the intricacies of managing FTD with FMC (Scenarios 1-5).
+            password = sessionline['password'].split('"')[1]
 
-Since the whole lab cannot be completed in the time allotted we've extended the lab window for the next 7 days.  Feel free
-to work on the remaining parts of the lab if/when you have some time.  If you are unable to complete the lab just reach out
-to me and I can spin up a new pod for you at a later date.
-
-We encourage interaction!  Ask questions as you work through the lab.  You can reach me at dmickels@cisco.com after this
-session's time has expired.
-
-"""
-            userinfo = 'Steps 1 and 2 on page 3 of the lab guide have already been done for you:\n\t' \
-                       '{}\n\tUsername: dcloud\n\tPassword: {}'.format(
-                                                                        sessionline['url'],
-                                                                        sessionline['sessionid'])
-            outputfilename = '{}\{}.txt'.format(outputdirectory, sessionline['sessionname'])
-            with open(outputfilename, 'w') as g:
+            userinfo = '\nAnyConnect VPN Connection Information:' \
+                       '\n\tConnect to: {}' \
+                       '\n\tUsername: {}' \
+                       '\n\tPassword: {}'.format(anyconnect_url, vpn_user1, password)
+            outputfilename = '{} -- {}.txt'.format(sessionline['sessionname'], sessionline['sessionid'])
+            gn = os.path.join(os.path.dirname(__file__), outputdirectory, outputfilename)
+            with open(gn, 'w') as g:
                 g.write(intro)
                 g.write('{}\n\n\n\n'.format(userinfo))
