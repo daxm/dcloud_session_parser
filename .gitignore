@@ -99,3 +99,4 @@ ENV/
 .idea/workspace.xml
 *.docx
 SessionDetails.csv
+ToPrint/
