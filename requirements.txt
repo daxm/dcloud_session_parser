@@ -1,0 +1,3 @@
+os
+python-docx
+docx
