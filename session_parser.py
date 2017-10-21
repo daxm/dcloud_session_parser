@@ -68,13 +68,15 @@ def main():
 
 if __name__ == '__main__':
     print("Welcome to the dCloud session_parser program!")
+    print("Be sure to update the variables: 'anyconnect_url' and 'title' to match your event's needs.")
     if os.path.isfile(os.path.join(os.path.dirname(__file__), inputfilename)) and os.path.exists(
             os.path.join(os.path.dirname(__file__), outputdirectory)):
-        print("Note:  The output of this program will be stored in the '{}' folder.".format(outputdirectory))
         print("")
         print("### Begin Program ###")
         main()
         print("### Program is finished ###")
+        print("")
+        print("Note: The files created by this program are be stored in the '{}' folder.".format(outputdirectory))
     else:
         print("""
 Error:  This program requires the '{}' to be in the same directory as the '{}' file.
