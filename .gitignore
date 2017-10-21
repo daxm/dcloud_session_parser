@@ -97,6 +97,6 @@ ENV/
 
 .idea/preferred-vcs.xml
 .idea/workspace.xml
-ToPrint/*
+ToPrint/*.docx
 SessionDetails.csv
 
