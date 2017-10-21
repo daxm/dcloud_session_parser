@@ -15,6 +15,8 @@ outputdirectory = 'ToPrint'
 def build_document(username, password, sessionline):
     # Create and set up the document
     doc = Document()
+
+    # The text of the document
     doc.add_paragraph('{} event'.format(title), style='Title')
     doc.add_paragraph('Use the following instructions to connect to and use your assigned dCloud demonstration:')
     doc.add_paragraph('Open your AnyConnect VPN client.', style='List Number')
