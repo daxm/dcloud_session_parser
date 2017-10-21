@@ -16,7 +16,7 @@ def build_document(username, password, sessionline):
     # Create and set up the document
     doc = Document()
     doc.add_paragraph('{} event'.format(title), style='Title')
-    doc.add_paragraph('Use the following instructions to connect to your pod.')
+    doc.add_paragraph('Use the following instructions to connect to and use your assigned dCloud demonstration:')
     doc.add_paragraph('Open your AnyConnect VPN client.', style='List Number')
     p = doc.add_paragraph('Connect to: ', style='List Number')
     p.add_run(anyconnect_url).bold = True
@@ -24,6 +24,8 @@ def build_document(username, password, sessionline):
     p.add_run(username).bold = True
     p = doc.add_paragraph('Password: ', style='List Number')
     p.add_run(password).bold = True
+    doc.add_paragraph('Follow along with the proctor, or use the provided guide,'
+                      ' to go through the hands-on demonstration.', style='List Number')
     doc.add_paragraph('If you encounter issues please ask a proctor for assistance.')
     p = doc.add_paragraph()
     p.add_run('Note: ').bold = True
@@ -69,16 +71,20 @@ def main():
 if __name__ == '__main__':
     print("Welcome to the dCloud session_parser program!")
     print("Be sure to update the variables: 'anyconnect_url' and 'title' to match your event's needs.")
-    if os.path.isfile(os.path.join(os.path.dirname(__file__), inputfilename)) and os.path.exists(
-            os.path.join(os.path.dirname(__file__), outputdirectory)):
-        print("")
-        print("### Begin Program ###")
-        main()
-        print("### Program is finished ###")
-        print("")
-        print("Note: The files created by this program are be stored in the '{}' folder.".format(outputdirectory))
-    else:
-        print("""
-Error:  This program requires the '{}' to be in the same directory as the '{}' file.
-This program also requires the '{}' folder in this same directory.
-""".format(inputfilename, os.path.basename(__file__), outputdirectory))
+
+    if not os.path.isfile(os.path.join(os.path.dirname(__file__), inputfilename)):
+        print("Error: This program requires the '{}' file to be in the same directory"
+              " as the '{}' program.").format(inputfilename, os.path.basename(__file__))
+        exit(1)
+
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), outputdirectory)):
+        os.makedirs(os.path.join(os.path.dirname(__file__), outputdirectory))
+
+    print("")
+    print("### Begin Program ###")
+
+    main()
+
+    print("### Program is finished ###")
+    print("")
+    print("Note: The files created by this program are be stored in the '{}' folder.".format(outputdirectory))
