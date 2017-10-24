@@ -26,10 +26,15 @@ def build_document(doc, username, password, sessionline):
     doc.add_paragraph('Follow along with the proctor, or use the provided guide,'
                       ' to go through the hands-on demonstration.', style='List Bullet')
     doc.add_paragraph('If you encounter issues please ask a proctor for assistance.')
+
     p = doc.add_paragraph()
-    p.add_run('Note: ').bold = True
-    p.add_run('If asked, your dCloud Session ID is: ')
+    p.add_run('Notes: ').bold = True
+    p = doc.add_paragraph('You can download the guide from: ', style='List Bullet')
+    p.add_run('http://tinyurl.com/sda-testdrive').bold = True
+    p = doc.add_paragraph('Your dCloud Session ID is: ', style='List Bullet')
     p.add_run(sessionline['sessionid']).bold = True
+    p = doc.add_paragraph('Your session name is: ', style='List Bullet')
+    p.add_run(sessionline['sessionname']).bold = True
 
     return doc
 
